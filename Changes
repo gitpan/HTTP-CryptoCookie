@@ -1,0 +1,13 @@
+Revision history for Perl extension HTTP::CryptoCookie.
+
+1.10  Fri Dec 02 07:45:56 2005
+	- moved to HTTP tree in CPAN
+	- cleaned up some tests
+	- cleaned up code
+	- improved POD and included die caveat when used
+	  under mod_perl.
+
+0.01  Wed May 28 23:26:26 2003
+	- original version; created by h2xs 1.22 with options
+		-AXc -n CryptoCookie -v 0.01 --use-new-tests -b 5.6.1 -O
+

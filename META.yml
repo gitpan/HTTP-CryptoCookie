@@ -1,0 +1,18 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         HTTP-CryptoCookie
+version:      1.10
+version_from: CryptoCookie.pm
+installdirs:  site
+requires:
+    CGI::Cookie:                   0
+    Compress::Zlib:                0
+    Convert::ASCII::Armour:        0
+    Crypt::CBC:                    0
+    Crypt::Rijndael:               0
+    Digest::SHA256:                0
+    FreezeThaw:                    0
+    Test::More:                    0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.30
