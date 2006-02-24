@@ -1,5 +1,11 @@
 Revision history for Perl extension HTTP::CryptoCookie.
 
+1.11  Fri Feb 24 14:03:32 2006
+	- fixup of problem in del_cookie method.
+	- cleanup of POD
+	- moved from Digest::SHA256 to Digest::SHA2 (due to deprecation)
+	- fixup for CGI::Cookie 1.26
+
 1.10  Fri Dec 02 07:45:56 2005
 	- moved to HTTP tree in CPAN
 	- cleaned up some tests

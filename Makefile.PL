@@ -7,13 +7,13 @@ WriteMakefile(
     'DISTNAME'		=> 'HTTP-CryptoCookie',
     'VERSION_FROM'	=> 'CryptoCookie.pm', # finds $VERSION
     'PREREQ_PM'		=> {'Test::More'  =>  0,
-			CGI::Cookie => 0,
-			Crypt::CBC => 0,
-			Crypt::Rijndael => 0,
-			Convert::ASCII::Armour => 0,
-			Compress::Zlib => 0,
-			Digest::SHA256 => 0,
-			FreezeThaw => 0 }, # e.g., Module::Name => 1.1
+			'CGI::Cookie' => '1.26',
+			'Crypt::CBC' => '2.14',
+			'Crypt::Rijndael' => 0,
+			'Convert::ASCII::Armour' => 0,
+			'Compress::Zlib' => 0,
+			'Digest::SHA2' => '1.1.0',
+			'FreezeThaw' => 0 }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
       (AUTHOR     => 'Dave Paris (a-mused) <amused@pobox.com>') : ()),
 );
@@ -23,5 +23,6 @@ use Crypt::CBC;
 use Digest::SHA256;
 use Convert::ASCII::Armour;
 use Compress::Zlib qw(compress uncompress);
-use FreezeThaw qw(freeze thaw)
+use FreezeThaw qw(freeze thaw);
+
 

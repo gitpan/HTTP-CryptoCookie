@@ -7,7 +7,7 @@ use strict;
 use CGI qw(:standard);  # for now, move to Apache (mod_perl) later
 use CGI::Cookie;
 use Crypt::CBC;
-use Digest::SHA256;
+use Digest::SHA2;
 use Convert::ASCII::Armour;
 use Compress::Zlib qw(compress uncompress);
 use FreezeThaw qw(freeze thaw);
@@ -23,10 +23,9 @@ require Exporter;
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '1.10';
+our $VERSION = '1.11';
 
 my $aa = new Convert::ASCII::Armour;
-my $digest = Digest::SHA256::new(256);
 
 sub _roll_dough {
 	my ($self,$struct) = @_;
@@ -47,11 +46,16 @@ sub new {
 	my($class,$key) = @_;
 	die "argument of key required" unless $key;
 
+	my $digest = new Digest::SHA2(256);
+	$digest->add(($key));
+	my $digest_key = $digest->digest();
+
 	my $self = bless {
-        cipher => Crypt::CBC->new({
-			'key' => substr($digest->hash($key),0,32),
-			'cipher' => 'Rijndael',
-			'regenerate_key' => 0}),
+        cipher => Crypt::CBC->new(
+			-key => $digest_key,
+			-cipher => 'Rijndael',
+			-regenerate_key => 0,
+			-salt => 1),
 	}, $class;
 
 	# redefine the value of $key in memory, then undef it
@@ -93,7 +97,7 @@ sub set_cookie {
 			-name => $args{cookie_name},
 			-value => $self->_roll_dough($args{cookie}),
 			-path => $args{path} || '/',
-			-exp => $args{exp},
+			-expires => $args{exp},
 			-secure => $args{secure} || 0,
 			-domain => $args{domain},
 		);
@@ -114,7 +118,7 @@ sub set_cookie {
 				-name => $cookie->{name} || $cookie->{cookie_name},
 				-value => $self->_roll_dough($cookie->{cookie}),
 				-path => $cookie->{path} || $args{path} || '/',
-				-exp => $cookie->{exp} || $args{exp},
+				-expires => $cookie->{exp} || $args{exp},
 				-secure => $cookie->{secure} || $args{secure} || 0,
 				-domain => $cookie->{domain} || $args{domain},
 			);
@@ -143,17 +147,16 @@ sub del_cookie {
 	foreach my $cookie_name (@{$args{cookie_name}}) {
 		my $donut_hole = CGI::Cookie->new(
 			-name => $cookie_name,
-			-exp => '-1M',
+			-expires => '-1M',
 		);
 
 		push(@{$jar}, $donut_hole);
 		if(exists $args{r}) {
 			$args{r}->headers_out->set('Set-Cookie' => $donut_hole);
-		} else {
-			print "Set-cookie: ". $donut_hole->as_string ."\n";
-		}
+		} 
+		print header(-cookie => $jar) unless (exists $args{r});
 	}
-
+	
 	return scalar(@{$jar});
 }
 
@@ -292,9 +295,10 @@ The only available attribute is:
 
 =item * cookie_name
 
-This is either a scalar or an arrayref containing the name or names of cookies
-that should be deleted from the user's browser.  A common application of this
-is a "log out" function.
+This is either a hash (or arrayref of hashes) containing the name or names
+of cookies that should be deleted from the user's browser.  A common
+application of this is a "log out" function.  They key in the hash is
+"cookie_name".
 
 =back
 

@@ -46,5 +46,5 @@ for(1..1000) {
 	);
 }
 my $elapsed = sprintf("%0.3f",tv_interval ($t0));
-diag("ran at $elapsed ms per cookie");
+diag("ran at $elapsed ms per cookie over 1000 cookies");
 
