@@ -1,7 +1,7 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         HTTP-CryptoCookie
-version:      1.11
+version:      1.12
 version_from: CryptoCookie.pm
 installdirs:  site
 requires:
@@ -11,6 +11,7 @@ requires:
     Crypt::CBC:                    2.14
     Crypt::Rijndael:               0
     Digest::SHA2:                  1.1.0
+    Digest::SHA256:                0
     FreezeThaw:                    0
     Test::More:                    0
 

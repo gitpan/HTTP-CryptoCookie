@@ -13,7 +13,8 @@ WriteMakefile(
 			'Convert::ASCII::Armour' => 0,
 			'Compress::Zlib' => 0,
 			'Digest::SHA2' => '1.1.0',
-			'FreezeThaw' => 0 }, # e.g., Module::Name => 1.1
+			'FreezeThaw' => 0,
+			'Digest::SHA256' => 0 }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
       (AUTHOR     => 'Dave Paris (a-mused) <amused@pobox.com>') : ()),
 );

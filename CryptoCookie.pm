@@ -23,7 +23,7 @@ require Exporter;
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '1.11';
+our $VERSION = '1.12';
 
 my $aa = new Convert::ASCII::Armour;
 
