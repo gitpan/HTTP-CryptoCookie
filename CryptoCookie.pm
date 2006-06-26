@@ -23,7 +23,7 @@ require Exporter;
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '1.12';
+our $VERSION = '1.13';
 
 my $aa = new Convert::ASCII::Armour;
 
@@ -34,7 +34,7 @@ sub _roll_dough {
 	my $step_two = $self->{cipher}->encrypt($step_one);
 
 	my $cooked = $aa->armour(
-		Object	=> 'FROOB',
+		Object	=> 'HTTP-CryptoCookie',
 		Headers	=> {},
 		Content	=> {data=>$step_two},
 		Compress => 0);

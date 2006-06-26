@@ -1,5 +1,8 @@
 Revision history for Perl extension HTTP::CryptoCookie.
 
+1.13  Mon Jun 26 11:37:18 2006
+	- modified ASCII Armouring header
+
 1.12  Tue May 16 13:52:55 2006
 	- added Digest::SHA256 to Makefile.PL due to build failure
 
