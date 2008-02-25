@@ -8,7 +8,7 @@ WriteMakefile(
     'VERSION_FROM'	=> 'CryptoCookie.pm', # finds $VERSION
     'PREREQ_PM'		=> {'Test::More'  =>  0,
 			'CGI::Cookie' => '1.26',
-			'Crypt::CBC' => '2.14',
+			'Crypt::CBC' => '2.17',
 			'Crypt::Rijndael' => 0,
 			'Convert::ASCII::Armour' => 0,
 			'Compress::Zlib' => 0,
@@ -18,12 +18,4 @@ WriteMakefile(
     ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
       (AUTHOR     => 'Dave Paris (a-mused) <amused@pobox.com>') : ()),
 );
-
-use CGI::Cookie;
-use Crypt::CBC;
-use Digest::SHA256;
-use Convert::ASCII::Armour;
-use Compress::Zlib qw(compress uncompress);
-use FreezeThaw qw(freeze thaw);
-
 

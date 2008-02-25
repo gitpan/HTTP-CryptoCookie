@@ -23,7 +23,7 @@ require Exporter;
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '1.13';
+our $VERSION = '1.14';
 
 my $aa = new Convert::ASCII::Armour;
 
@@ -34,10 +34,10 @@ sub _roll_dough {
 	my $step_two = $self->{cipher}->encrypt($step_one);
 
 	my $cooked = $aa->armour(
-		Object	=> 'HTTP-CryptoCookie',
+		Object	=> 'HCC',
 		Headers	=> {},
 		Content	=> {data=>$step_two},
-		Compress => 0);
+		Compress => 1);
 
 	return $cooked;
 }
@@ -55,7 +55,8 @@ sub new {
 			-key => $digest_key,
 			-cipher => 'Rijndael',
 			-regenerate_key => 0,
-			-salt => 1),
+			-salt => 1,
+			-header => 'salt'),
 	}, $class;
 
 	# redefine the value of $key in memory, then undef it
@@ -69,7 +70,7 @@ sub get_cookie {
 
 	ref $args{cookie_name} && return undef;
 
-	my %cookies = CGI::Cookie->fetch();
+	my %cookies = (! exists $self->{debug}) ?  CGI::Cookie->fetch() : $args{force_cookie};
 	if(my $cookie = $cookies{$args{cookie_name}}) {
 		# first step, unarmour
 		my $dough = $aa->unarmour($cookie->value);

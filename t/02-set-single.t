@@ -16,8 +16,9 @@ BEGIN {
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-my $key = join '', map { chr(int(rand(256))) } (0..31);
-my $cc = new HTTP::CryptoCookie($key);
+my $key = '12345678901234567890123456789012';
+my $debug = 1;
+my $cc = new HTTP::CryptoCookie($key,$debug);
 
 isa_ok($cc,'HTTP::CryptoCookie');
 
@@ -33,14 +34,17 @@ my $struct = {
 
 my $rv = eval { $cc->set_cookie(
 	cookie => $struct,
-	cookie_name => 'TEST'
+	cookie_name => 'TEST',
 ) };
 is($rv, 1, 'setting of single cookie');
 
+
+
 my $t0 = [gettimeofday];
+my $cc2 = new HTTP::CryptoCookie($key);
 for(1..1000) {
 	$struct->{now} = [gettimeofday];
-	$cc->set_cookie(
+	$cc2->set_cookie(
 		cookie => $struct,
 		cookie_name => "TEST$_",
 	);
